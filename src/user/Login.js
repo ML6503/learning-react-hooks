@@ -9,7 +9,7 @@ export default function Login() {
   const [loginFailed, setLoginFailed] = useState(false);
   const [password, setPassword] = useState("");
 
-  const [ user, login ] = useResource((username, password) => ({
+  const [ user, login ] = useResource(({username, password}) => ({
     url: `login/${encodeURI(username)}/${encodeURI(password)}`,
     method: 'get'
   }));
