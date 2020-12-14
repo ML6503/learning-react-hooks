@@ -1,20 +1,46 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useResource } from 'react-request-hook';
 import { StateContext } from "../contexts";
 
 export default function Login() {
   const { dispatch } = useContext(StateContext);
 
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const [ user, login ] = useResource((username, password) => ({
+    url: `login/${encodeURI(username)}/${encodeURI(password)}`,
+    method: 'get'
+  }));
+
+  useEffect(() => {
+    if (user && user.data) {
+      if ( user.data.length > 0) {
+        setLoginFailed(false)
+        dispatch({ type: 'LOGIN', username: user.data[0].username })
+      } else {
+        setLoginFailed(true)
+      }
+    }
+    if (user && user.error) {
+      setLoginFailed(true)
+    }
+  }, [user]);
 
   function handleUserName(evt) {
-    setUserName(evt.target.value);
+    setUsername(evt.target.value);
+  }
+
+  function handlePassword(evt) {
+    setPassword(evt.target.value);
   }
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch({ type: "LOGIN", userName });
+        login({ username, password });
       }}
     >
       <label hmtlFor="login-username">User name: </label>
@@ -22,12 +48,13 @@ export default function Login() {
         type="text"
         name="login-username"
         id="login-username"
-        value={userName}
+        value={username}
         onChange={handleUserName}
       />
       <label hmtlFor="login-password">Password: </label>
-      <input type="password" name="login-password" id="login-password" />
-      <input type="submit" value="Login" disabled={userName.length === 0} />
+      <input type="password" value={password} onChange={handlePassword} name="login-password" id="login-password" />
+      <input type="submit" value="Login" disabled={username.length === 0} />
+      {loginFailed && <span style={{ color:'red' }}>Invalid username or password</span>}
     </form>
   );
 }

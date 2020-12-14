@@ -1,15 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useResource } from 'react-request-hook';
 import { StateContext } from "../contexts";
 
 export default function Register() {
   const { dispatch } = useContext(StateContext);
 
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRepeat, setPasswordRepeat] = useState("");
 
+  const [user, register] = useResource(({username, password}) => ({
+    url: '/users',
+    method: 'post',
+    data: { username, password }
+  }));
+
+  useEffect(() => {
+    if(user && user.data) {
+      dispatch({ type: 'REGISTER', username: user.data.username });
+    }
+  }, [user]);
+
   function handleUserName(evt) {
-    setUserName(evt.target.value);
+    setUsername(evt.target.value);
   }
 
   function handlePassword(evt) {
@@ -24,7 +37,7 @@ export default function Register() {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch({ type: "REGISTER", userName });
+        register({ username, password });
       }}
     >
       <label hmtlFor="register-username">User name:</label>
@@ -32,7 +45,7 @@ export default function Register() {
         type="text"
         name="register-username"
         id="register-username"
-        value={userName}
+        value={username}
         onChange={handleUserName}
       />
       <label hmtlFor="register-password">Password:</label>
@@ -55,7 +68,7 @@ export default function Register() {
         type="submit"
         value="Register"
         disabled={
-          userName.length === 0 ||
+          username.length === 0 ||
           password.length === 0 ||
           password !== passwordRepeat
         }
