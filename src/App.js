@@ -55,7 +55,9 @@ export default function App() {
           <Header text="React Hooks Blog" />
           <ChangeTheme setTheme={setTheme} theme={theme} />
           <br />
-          <UserBar />
+          <React.Suspense fallback={'Loading...'}>
+            <UserBar />
+          </React.Suspense>
           <br />
           {user && <CreatePost />}
           <br />
