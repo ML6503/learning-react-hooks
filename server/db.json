@@ -1,0 +1,24 @@
+{
+  "posts": [
+    {
+      "id": "react-hooks",
+      "title": "React Hooks",
+      "content": "The coolest thing since tequila & lemon at seaside!",
+      "author": "Arethel A"
+    },
+    {
+      "id": "react-fragments",
+      "title": "Using React Fragments",
+      "content": "Creating nice UI!",
+      "author": "Arethel A"
+    }
+  ],
+  "users": [
+    { "id": 1, "username": "Arethel A", "password": "supersecure42" }
+  ],
+  "themes": [
+    { "id": 1, "primaryColor": "deepskyblue", "secondaryColor": "coral" },
+    { "id": 2, "primaryColor": "orchid", "secondaryColor": "mediumseagreen" },
+    { "id": 3, "primaryColor": "darkslategray", "secondaryColor": "slategray" }
+  ]
+}
