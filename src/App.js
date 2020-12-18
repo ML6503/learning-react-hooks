@@ -1,13 +1,10 @@
 import React, { useReducer, useEffect, useState } from "react";
-import { useResource } from 'react-request-hook';
 
-import CreatePost from "./post/CreatePost";
-import PostLists from "./post/PostLists";
-import UserBar from "./user/UserBar";
-import Header from "./Header";
 import { ThemeContext, StateContext } from "./contexts";
-import ChangeTheme from "./ChangeTheme";
 import appReducer from "./reducers";
+import HeaderBar from "./pages/HeaderBar";
+import HomePage from "./pages/HomePage";
+import PostPage from "./pages/PostPage";
 
 
 export default function App() {
@@ -22,23 +19,8 @@ export default function App() {
     error: ''
   });
 
-  const { user, error } = state;
+  const { user } = state;
 
-  const [posts, getPosts] = useResource(() => ({
-    url: '/posts',
-    method: 'get'
-  }));
-
-  useEffect(getPosts, []);
-
-  useEffect(() => {
-    if(posts && posts.error) {
-      dispatch({ type: 'POSTS_ERROR'})
-    }
-    if(posts && posts.data) {
-      dispatch({ type: 'FETCH_POSTS', posts: posts.data.reverse() })
-    }
-  }, [posts]);
 
   useEffect(() => {
     if (user) {
@@ -52,18 +34,10 @@ export default function App() {
     <StateContext.Provider value={{ state, dispatch }}>
       <ThemeContext.Provider value={theme}>
         <div style={{ padding: 8 }}>
-          <Header text="React Hooks Blog" />
-          <ChangeTheme setTheme={setTheme} theme={theme} />
-          <br />
-          <React.Suspense fallback={'Loading...'}>
-            <UserBar />
-          </React.Suspense>
-          <br />
-          {user && <CreatePost />}
-          <br />
+          <HeaderBar setTheme={setTheme} />          
           <hr />
-          {error && <b>{error}</b>}
-          <PostLists />
+          {/* <HomePage /> */}
+          <PostPage id={'react-hooks'} />
         </div>
       </ThemeContext.Provider>
     </StateContext.Provider>

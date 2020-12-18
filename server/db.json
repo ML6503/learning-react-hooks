@@ -11,14 +11,36 @@
       "title": "Using React Fragments",
       "content": "Creating nice UI!",
       "author": "Arethel A"
+    },
+    {
+      "title": "rtr",
+      "content": "rtrt",
+      "author": "Arethel A",
+      "id": "qu6Ozfi"
     }
   ],
   "users": [
-    { "id": 1, "username": "Arethel A", "password": "supersecure42" }
+    {
+      "id": 1,
+      "username": "Arethel A",
+      "password": "supersecure42"
+    }
   ],
   "themes": [
-    { "id": 1, "primaryColor": "deepskyblue", "secondaryColor": "coral" },
-    { "id": 2, "primaryColor": "orchid", "secondaryColor": "mediumseagreen" },
-    { "id": 3, "primaryColor": "darkslategray", "secondaryColor": "slategray" }
+    {
+      "id": 1,
+      "primaryColor": "deepskyblue",
+      "secondaryColor": "coral"
+    },
+    {
+      "id": 2,
+      "primaryColor": "orchid",
+      "secondaryColor": "mediumseagreen"
+    },
+    {
+      "id": 3,
+      "primaryColor": "darkslategray",
+      "secondaryColor": "slategray"
+    }
   ]
 }
