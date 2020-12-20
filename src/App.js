@@ -11,7 +11,7 @@ import PostPage from "./pages/PostPage";
 const routes = mount ({
   '/': route({ view: <HomePage /> }),
   '/view/:id': route( req => {
-    return { view: <PostPage id={req.params.id } />}
+    return { view: <PostPage id={req.params.id} />}
   })
 });
 
