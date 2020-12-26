@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from 'react-navi';
 import { ThemeContext } from "../contexts";
+import FooterBar from '../pages/FooterBar';
 
 function Post({ title, content, author, id, short=false }) {
   const { secondaryColor } = useContext(ThemeContext);
@@ -25,6 +26,10 @@ function Post({ title, content, author, id, short=false }) {
       <i>
         Written by <b>{author}</b>
       </i>
+      <br />
+      <hr />
+      <FooterBar />
+      <br />
     </div>
   );
 };
