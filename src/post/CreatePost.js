@@ -26,7 +26,7 @@ export default function CreatePost() {
 
   const debounced = useDebouncedCallback(
     (value) => setContent(value),
-    200
+    400
   );
 
   useEffect(() => {
