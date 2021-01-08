@@ -1,13 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useResource } from 'react-request-hook';
+import { useInput } from 'react-hookedup';
 import { StateContext } from "../contexts";
 
 export default function Login() {
   const { dispatch } = useContext(StateContext);
 
-  const [username, setUsername] = useState("");
-  const [loginFailed, setLoginFailed] = useState(false);
-  const [password, setPassword] = useState("");
+  const { value: username, bindToInput: bindUsername } = useInput("");
+  const { value: password, bindToInput: bindPassword } = useInput("");
+
+  const [loginFailed, setLoginFailed] = useState(false);  
 
   const [ user, login ] = useResource(({username, password}) => ({
     url: `login/${encodeURI(username)}/${encodeURI(password)}`,
@@ -28,14 +30,6 @@ export default function Login() {
     }
   }, [user]);
 
-  function handleUserName(evt) {
-    setUsername(evt.target.value);
-  }
-
-  function handlePassword(evt) {
-    setPassword(evt.target.value);
-  }
-
   return (
     <form
       onSubmit={(e) => {
@@ -49,10 +43,10 @@ export default function Login() {
         name="login-username"
         id="login-username"
         value={username}
-        onChange={handleUserName}
+        {...bindUsername}
       />
       <label hmtlFor="login-password">Password: </label>
-      <input type="password" value={password} onChange={handlePassword} name="login-password" id="login-password" />
+      <input type="password" value={password} {...bindPassword} name="login-password" id="login-password" />
       <input type="submit" value="Login" disabled={username.length === 0} />
       {loginFailed && <span style={{ color:'red' }}>Invalid username or password</span>}
     </form>

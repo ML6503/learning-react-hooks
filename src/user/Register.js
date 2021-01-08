@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useResource } from 'react-request-hook';
+import { useInput } from 'react-hookedup';
 import { StateContext } from "../contexts";
 
 export default function Register() {
   const { dispatch } = useContext(StateContext);
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordRepeat, setPasswordRepeat] = useState("");
+  const { value: username, bindToInput: bindUsername } = useInput("");
+  const { value: password, bindToInput: bindPassword } = useInput("");
+  const { value: passwordRepeat, bindToInput: bindPasswordRepeat } = useInput("");
 
   const [user, register] = useResource(({username, password}) => ({
     url: '/users',
@@ -20,19 +21,7 @@ export default function Register() {
       dispatch({ type: 'REGISTER', username: user.data.username });
     }
   }, [user]);
-
-  function handleUserName(evt) {
-    setUsername(evt.target.value);
-  }
-
-  function handlePassword(evt) {
-    setPassword(evt.target.value);
-  }
-
-  function handlePasswordRepeat(evt) {
-    setPasswordRepeat(evt.target.value);
-  }
-
+ 
   return (
     <form
       onSubmit={(e) => {
@@ -46,7 +35,7 @@ export default function Register() {
         name="register-username"
         id="register-username"
         value={username}
-        onChange={handleUserName}
+        {...bindUsername}
       />
       <label hmtlFor="register-password">Password:</label>
       <input
@@ -54,7 +43,7 @@ export default function Register() {
         name="register-password"
         id="register-password"
         value={password}
-        onChange={handlePassword}
+        {...bindPassword}
       />
       <label hmtlFor="register-password">Repeate Password:</label>
       <input
@@ -62,7 +51,7 @@ export default function Register() {
         name="register-password-repeat"
         id="register-password-repeat"
         value={passwordRepeat}
-        onChange={handlePasswordRepeat}
+        {...bindPasswordRepeat}
       />
       <input
         type="submit"
