@@ -32,7 +32,7 @@ export default function CreatePost() {
   useEffect(() => {
     debounced.cancel();
     setInput(undoContent.present);
-  }, [undoContent]);
+  }, [undoContent, debounced]);
 
   function handleContent(e) {
     const { value } = e.target;
@@ -53,7 +53,7 @@ export default function CreatePost() {
       dispatch({ type: 'CREATE_POST', ...post.data });
       navigation.navigate(`/view/${post.data.id}`);
     }
-  }, [post]);
+  }, [post, navigation, dispatch]);
   
   function handleCreate() {
     createPost({ title, content, author: user });    

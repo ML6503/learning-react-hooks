@@ -20,6 +20,7 @@
     "use-undo": "^1.0.3"
   },
   "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.2.0",
     "typescript": "3.8.3"
   },
   "scripts": {
@@ -28,7 +29,8 @@
     "dev": "concurrently \"npm run server\" \"npm run react\" ",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint src/"
   },
   "browserslist": [
     ">0.2%",

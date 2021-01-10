@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useResource } from 'react-request-hook';
 import { useInput } from 'react-hookedup';
 import { StateContext } from "../contexts";
@@ -20,7 +20,7 @@ export default function Register() {
     if(user && user.data) {
       dispatch({ type: 'REGISTER', username: user.data.username });
     }
-  }, [user]);
+  }, [user, dispatch]);
  
   return (
     <form

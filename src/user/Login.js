@@ -28,7 +28,7 @@ export default function Login() {
     if (user && user.error) {
       setLoginFailed(true)
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return (
     <form

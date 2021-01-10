@@ -26,7 +26,7 @@ export default function ChangeTheme({ theme, setTheme }) {
 
   const { data, isLoading } = themes;
 
-  useEffect(getThemes, []);
+  useEffect(getThemes, [getThemes]);
 
     function isActive(t) {
     return (

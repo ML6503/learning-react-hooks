@@ -12,7 +12,7 @@ export default function HomePage() {
         method: 'get'
     }));
 
-    useEffect(getPosts, []);
+    useEffect(getPosts, [getPosts]);
 
     useEffect(() => {
         if(posts && posts.error) {
@@ -21,7 +21,7 @@ export default function HomePage() {
         if(posts && posts.data) {
         dispatch({ type: 'FETCH_POSTS', posts: posts.data.reverse() })
         }
-    }, [posts]);
+    }, [posts, dispatch]);
 
     return(
         <div>
