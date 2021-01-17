@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useResource } from 'react-request-hook';
+// import { useResource } from 'react-request-hook';
 import { useInput } from 'react-hookedup';
-import useUndo from 'use-undo';
+// import useUndo from 'use-undo';
 import { useNavigation } from 'react-navi';
-import { useDebouncedCallback } from 'use-debounce';
+// import { useDebouncedCallback } from 'use-debounce';
+import useDebouncedUndo from '../hooks/useDebouncedUndo';
 
 import { StateContext } from "../contexts";
+import { useAPICreatePost } from '../hooks/api';
 
 export default function CreatePost() {
   const { state, dispatch } = useContext(StateContext);
@@ -14,37 +16,41 @@ export default function CreatePost() {
   const { value: title, bindToInput: bindTitle } = useInput('');
   // const { value: content, bindToInput: bindContent } = useInput('');
 
-  const [ content, setInput ] = useState('');
+  // const [ content, setInput ] = useState('');
   
-  const [ undoContent, {
-    set: setContent,
-    undo,
-    redo,
-    canUndo,
-    canRedo
-  }] = useUndo('');
+  // const [ undoContent, {
+  //   set: setContent,
+  //   undo,
+  //   redo,
+  //   canUndo,
+  //   canRedo
+  // }] = useUndo('');
 
-  const debounced = useDebouncedCallback(
-    (value) => setContent(value),
-    400
-  );
+  // const debounced = useDebouncedCallback(
+  //   (value) => setContent(value),
+  //   400
+  // );
 
-  useEffect(() => {
-    debounced.cancel();
-    setInput(undoContent.present);
-  }, [undoContent, debounced]);
+  // useEffect(() => {
+  //   debounced.cancel();
+  //   setInput(undoContent.present);
+  // }, [undoContent, debounced]);
 
-  function handleContent(e) {
-    const { value } = e.target;
-    setInput(value);
-    debounced.callback(value);
-  };
+  // function handleContent(e) {
+  //   const { value } = e.target;
+  //   setInput(value);
+  //   debounced.callback(value);
+  // };
+  
+  useDebouncedUndo();
 
-  const [ post, createPost ] = useResource(({ title, content, author }) => ( {
-    url: '/posts',
-    method: 'post',
-    data: { title, content, author }
-  }));
+  // const [ post, createPost ] = useResource(({ title, content, author }) => ( {
+  //   url: '/posts',
+  //   method: 'post',
+  //   data: { title, content, author }
+  // }));
+
+  const [ post, createPost] = useAPICreatePost();
 
   const navigation = useNavigation();
 

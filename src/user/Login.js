@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useResource } from 'react-request-hook';
+// import { useResource } from 'react-request-hook';
 import { useInput } from 'react-hookedup';
 import { StateContext } from "../contexts";
+import { useAPILogin } from '../hooks/api';
 
 export default function Login() {
   const { dispatch } = useContext(StateContext);
@@ -11,10 +12,12 @@ export default function Login() {
 
   const [loginFailed, setLoginFailed] = useState(false);  
 
-  const [ user, login ] = useResource(({username, password}) => ({
-    url: `login/${encodeURI(username)}/${encodeURI(password)}`,
-    method: 'get'
-  }));
+  // const [ user, login ] = useResource(({username, password}) => ({
+  //   url: `login/${encodeURI(username)}/${encodeURI(password)}`,
+  //   method: 'get'
+  // }));
+
+  const [ user, login ] = useAPILogin();
 
   useEffect(() => {
     if (user && user.data) {
