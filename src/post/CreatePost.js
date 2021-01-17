@@ -1,54 +1,26 @@
-import React, { useState, useContext, useEffect } from "react";
-// import { useResource } from 'react-request-hook';
+import React, { useEffect } from "react";
 import { useInput } from 'react-hookedup';
 // import useUndo from 'use-undo';
 import { useNavigation } from 'react-navi';
 // import { useDebouncedCallback } from 'use-debounce';
-import useDebouncedUndo from '../hooks/useDebouncedUndo';
+import { useDispatch, useUserState, useDebouncedUndo, useAPICreatePost } from "../hooks";
 
-import { StateContext } from "../contexts";
-import { useAPICreatePost } from '../hooks/api';
 
 export default function CreatePost() {
-  const { state, dispatch } = useContext(StateContext);
-  const { user } = state;
+  const dispatch = useDispatch();
+  const user  = useUserState;
 
   const { value: title, bindToInput: bindTitle } = useInput('');
   // const { value: content, bindToInput: bindContent } = useInput('');
 
-  // const [ content, setInput ] = useState('');
-  
-  // const [ undoContent, {
-  //   set: setContent,
-  //   undo,
-  //   redo,
-  //   canUndo,
-  //   canRedo
-  // }] = useUndo('');
+  const [ content, setContent, { undo, redo, canUndo, canRedo } ] = useDebouncedUndo();
 
-  // const debounced = useDebouncedCallback(
-  //   (value) => setContent(value),
-  //   400
-  // );
-
-  // useEffect(() => {
-  //   debounced.cancel();
-  //   setInput(undoContent.present);
-  // }, [undoContent, debounced]);
-
-  // function handleContent(e) {
-  //   const { value } = e.target;
-  //   setInput(value);
-  //   debounced.callback(value);
-  // };
+  function handleContent(e) {
+    const { value } = e.target;
+    setContent(value);
+  };
   
   useDebouncedUndo();
-
-  // const [ post, createPost ] = useResource(({ title, content, author }) => ( {
-  //   url: '/posts',
-  //   method: 'post',
-  //   data: { title, content, author }
-  // }));
 
   const [ post, createPost] = useAPICreatePost();
 

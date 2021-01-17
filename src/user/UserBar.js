@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from "react";
-import { StateContext } from "../contexts";
+import React, { Fragment } from "react";
+import { useUserState } from "../hooks";
 
 import Login from "./Login";
 import Register from "./Register";
@@ -7,8 +7,8 @@ import Register from "./Register";
 const Logout = React.lazy(() => import("./Logout")); 
 
 export default function UserBar() {
-  const { state } = useContext(StateContext);
-  const { user } = state;
+  const  user = useUserState();
+
   if (user) {
     return <Logout />;
   } else {
